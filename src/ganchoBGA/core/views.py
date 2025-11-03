@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
+from django.contrib import messages
 from .models import Bolso
+from .forms import BolsoForm
 import json
 
 # Create your views here.
@@ -50,3 +52,49 @@ def colecciones(request):
 def contacto(request):
     """Vista de contacto"""
     return render(request, 'core/contacto.html')
+
+
+def agregar_bolso(request):
+    """Vista para agregar un nuevo bolso"""
+    if request.method == 'POST':
+        form = BolsoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, '¡Bolso agregado exitosamente!')
+            return redirect('colecciones')
+        else:
+            messages.error(request, 'Por favor corrige los errores en el formulario.')
+    else:
+        form = BolsoForm()
+    
+    return render(request, 'core/agregar_bolso.html', {'form': form})
+
+
+def editar_bolso(request, bolso_id):
+    """Vista para editar un bolso existente"""
+    bolso = get_object_or_404(Bolso, id=bolso_id)
+    
+    if request.method == 'POST':
+        form = BolsoForm(request.POST, request.FILES, instance=bolso)
+        if form.is_valid():
+            form.save()
+            messages.success(request, '¡Bolso actualizado exitosamente!')
+            return redirect('colecciones')
+        else:
+            messages.error(request, 'Por favor corrige los errores en el formulario.')
+    else:
+        form = BolsoForm(instance=bolso)
+    
+    return render(request, 'core/editar_bolso.html', {'form': form, 'bolso': bolso})
+
+
+def eliminar_bolso(request, bolso_id):
+    """Vista para eliminar un bolso"""
+    bolso = get_object_or_404(Bolso, id=bolso_id)
+    
+    if request.method == 'POST':
+        bolso.delete()
+        messages.success(request, '¡Bolso eliminado exitosamente!')
+        return redirect('colecciones')
+    
+    return render(request, 'core/eliminar_bolso.html', {'bolso': bolso})

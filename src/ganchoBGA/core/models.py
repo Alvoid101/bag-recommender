@@ -23,10 +23,10 @@ class Bolso(models.Model):
         blank=True,
         null=True
     )
-    local_image = models.CharField(
-        max_length=255,
+    local_image = models.ImageField(
+        upload_to='bolsos/',
         verbose_name="Imagen Local",
-        help_text="Ruta de la imagen local",
+        help_text="Imagen del bolso",
         blank=True,
         null=True
     )
