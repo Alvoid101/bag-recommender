@@ -1,0 +1,88 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-logo">
+            <img src="{% static 'core/images/Logo_transparente.png' %}" alt="GANCHO">
+        </div>
+        <h1 class="hero-title">GANCHO</h1>
+        <p class="hero-subtitle">Lleva tu esencia. Enseña tu poder</p>
+        <p class="hero-description">
+            Fabricamos con Guarniel Bucaramanga con amor y detalle. Envíos a toda Colombia. 
+            Bolsos diseñados para mujeres auténticas y seguras.
+        </p>
+        
+        <!-- Color Options -->
+        <div class="color-options">
+            <div class="color-bag color-red"></div>
+            <div class="color-bag color-pink"></div>
+            <div class="color-bag color-beige"></div>
+            <div class="color-bag color-white"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Bolsos Section -->
+<section class="bolsos-section">
+    <div class="container">
+        <h2 class="section-title">Bolsos</h2>
+        
+        <div class="carousel-container">
+            <!-- Navigation Arrows -->
+            <button class="carousel-arrow carousel-prev" id="prevBtn">
+                <span>&lt;</span>
+            </button>
+            
+            <!-- Bolso Display -->
+            <div class="bolso-display" id="bolsoDisplay">
+                <div class="bolso-card">
+                    <img src="{% static 'core/images/bolso-placeholder.svg' %}" alt="Bolso" class="bolso-image" id="bolsoImage">
+                </div>
+                <div class="bolso-info">
+                    <p class="bolso-price" id="bolsoPrice">58000</p>
+                </div>
+            </div>
+            
+            <button class="carousel-arrow carousel-next" id="nextBtn">
+                <span>&gt;</span>
+            </button>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Carousel functionality
+    let currentIndex = 0;
+    const bolsos = {{ bolsos_json|safe }};
+    
+    function updateBolso() {
+        if (bolsos && bolsos.length > 0) {
+            const bolso = bolsos[currentIndex];
+            document.getElementById('bolsoImage').src = bolso.image || "{% static 'core/images/bolso-placeholder.svg' %}";
+            document.getElementById('bolsoPrice').textContent = bolso.price || '58000';
+        }
+    }
+    
+    document.getElementById('prevBtn').addEventListener('click', function() {
+        if (bolsos && bolsos.length > 0) {
+            currentIndex = (currentIndex - 1 + bolsos.length) % bolsos.length;
+            updateBolso();
+        }
+    });
+    
+    document.getElementById('nextBtn').addEventListener('click', function() {
+        if (bolsos && bolsos.length > 0) {
+            currentIndex = (currentIndex + 1) % bolsos.length;
+            updateBolso();
+        }
+    });
+    
+    // Initialize
+    updateBolso();
+</script>
+{% endblock %}

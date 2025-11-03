@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}GANCHO - Bolsos{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/styles.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="{% static 'core/images/Logo_transparente.png' %}" alt="GANCHO" class="logo-img">
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="{% url 'home' %}">Inicio</a></li>
+                    <li><a href="{% url 'colecciones' %}">Colecciones</a></li>
+                    <li><a href="{% url 'contacto' %}">Contáctanos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Sitio desarrollado por kiskasoft.com</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'core/js/script.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
