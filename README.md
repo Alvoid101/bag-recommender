@@ -1,5 +1,8 @@
 # Sistema recomendador de bolsos para dama basado en el color
 
+
+<img width="800" height="300" alt="Banner" src="https://github.com/user-attachments/assets/9feac9cb-2b45-4acd-9584-e8ee959369d7" />
+
 Recomendador inteligente de bolsos desarrollado con técnicas de machine learning y visión por computadora. Incluye extracción de características visuales y clasificación mediante SVM, ademas icluye agrupamiento mediante Kmeans.
 
 ## Autores
